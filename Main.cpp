@@ -7,6 +7,7 @@
 #include <iostream>
 #include <cstring>
 #include <fstream>
+#include <cstdlib>
 #include "Node.h"
 #include "Tree.h"
 
@@ -33,16 +34,16 @@ int main() {
 			if (strcmp(in, "yes") == 0) {
 				enter(tree);
 				clear(in);
-				tree->display();
+				//tree->display();
 			}
 		}
 		else { // If tree is not empty t ask the user what commands they want to execute
-			std::cout << "Would you like to 'add', 'read', 'print', or 'quit'?" << std::endl;
+			std::cout << "Would you like to 'add', 'read', 'print', 'search', or 'quit'?" << std::endl;
 			std::cin >> in;
 			if (strcmp(in, "add") == 0) { // Adds one number
 				getInput(tree);
 				clear(in);
-				tree->display();
+				//tree->display();
 			}
 			/*
 			else if (strcmp(in, "remove") == 0) {
@@ -80,6 +81,18 @@ int main() {
 				stop = true;
 				// Need to delete tree
 				break;
+			}
+			else if (strcmp(in, "search") == 0) { // Runs search
+				std::cout << "What number are you searching for?" << std::endl;
+				int search = 0;
+				std::cin >> search;
+				if (tree->search(tree->getRoot(), search) == NULL) {
+					std::cout << search << " is not in this tree." << std::endl;
+				}
+				else {
+					std::cout << search << " is in the tree!" << std::endl;
+				}
+				
 			}
 			else { // If they don't enter valid input it asks the user if they want help
 				std::cout << "You did not enter a valid input. If you would like help enter 'help'." 
@@ -140,6 +153,7 @@ void help() { // Help function that list all commands
 	<< "\t" << "'read' = Insert numbers from a file into the tree." << std::endl 
 	<< "\t" << "'print' = Visually print the tree." << std::endl 
 	<< "\t" << "'quit' = Stops the program." << std::endl << std::endl
+	<< "\t" << "'search' = Search for a number in the tree." << std::endl << std::endl
 	<< "********************************************" << std::endl;
 }
 
@@ -157,7 +171,7 @@ bool getInput(Tree* tree, char* fileName) { // Input function with file
 		file >> in;
 		while (true) { // Gage did this
 			char current = in[index++];
-			if (current == '\0') {
+			if (current == '\0' ) {
 				break;
 			} else if (current == ',') {
 				tree->push(input);
@@ -187,6 +201,17 @@ void getInput(Tree* tree) { // Inptu function for one number
 			//std::cout << input << std::endl;
 			tree->push(input);
 			//std::cout << "goon\n";
+		}
+		else if (input == 1001) {
+			for (int i = 499; i > 0; i--) {
+				int add = rand() % 999;
+				if (tree->search(tree->getRoot(), add) != NULL) {
+					i++;
+				}
+				else {
+					tree->push(add);
+				}
+			}
 		}
 		//std::cin.unget();
 		//std::cout << "Whitespace: " << int(std::cin.get()) << std::endl;
@@ -284,4 +309,3 @@ void build() { // Build function used for early debugging
 	*/
 	
 }
-
