@@ -171,7 +171,7 @@ bool getInput(Tree* tree, char* fileName) { // Input function with file
 		file >> in;
 		while (true) { // Gage did this
 			char current = in[index++];
-			if (current == '\0' ) {
+			if (current == '\0') {
 				break;
 			} else if (current == ',') {
 				tree->push(input);

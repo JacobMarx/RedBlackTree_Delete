@@ -23,6 +23,7 @@ public:
 	Node* findSucc(Node*);
 	Node* min(Node*);
 	Node* search(Node*, int);
+	Node* find(Node*, int);
 	
 	void lLeft(Node*, Node*, Node*, Node*);
 	void lRight(Node*, Node*, Node*, Node*);
@@ -39,7 +40,7 @@ private:
 	Node* root;
 	
 	// Private Functions
-	void push(Node*&, int);
+	void push(Node*, int);
 	void print(Node*, int) const;
 	
 };
