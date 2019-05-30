@@ -232,21 +232,28 @@ void Tree::remove(int remove) { // Remove function not use din insert
 
 }
 */
-void remove(Node* int)  {
+void Tree::remove(int in)  {
 //*************REMOVE PRE*************
 	Node* p = NULL;
 	Node* s = NULL;
-	Node* del = search(int);
+	Node* del = search(root, in);
 	Node* node = findSucc(del);
 //If there is a successor of the node
 	if (del != NULL && node != NULL) {
 //	Swap the data / standard delete
 		del->data = node->data;
 //	perform the remove on that node
-		remove(Node);
+		remove(node->data);
 	}
 	else {
-//Set family
+		remove_setFam(node, p, s);
+//	*Find cases
+		remove_cases(node, p, s);
+	}
+}
+
+void Tree::remove_setFam(Node* node, Node*& p, Node*& s) {
+//	Set family
 //	Set parent
 		if (node->parent != NULL) {
 			p = node->parent;
@@ -258,14 +265,11 @@ void remove(Node* int)  {
 		else if (p->right == node && p->left != NULL) {
 			s = p->left;
 		}
-//	*Find cases
-		remove_cases(node, p, s);
-	}
 }
 
-void remove_cases(Node* n, Node* p, Node* s) {
+void Tree::remove_cases(Node* n, Node* p, Node* s) {
 //	If node is red and has one black child or node is black and one child that is red
-	if (n->color == 2 && n->left != NULL && node->left->color == 1 && n->right == NULL
+	if (n->color == 2 && n->left != NULL && n->left->color == 1 && n->right == NULL
 		|| n->color == 2 && n->right != NULL &&  n->right->color == 1 && n->left == NULL
 		|| n->color == 1 && n->left != NULL && n->left->color == 2 && n->right == NULL
 		|| n->color == 1 && n->right != NULL && n->right->color == 1 && n->left == NULL) {
@@ -277,46 +281,98 @@ void remove_cases(Node* n, Node* p, Node* s) {
 		}
 		else {
 			n->data = n->right->data;
-			delete[] n->right
+			delete[] n->right;
 		}
 	}
 	else {
+//		Case: 1
 		if (n == root && n->left != NULL && n->right == NULL) {
 			remove_1(n, p, s);
 		}
-		if () {
+//		Case: 2
+		if (p != NULL && s != NULL && s->color == 2) {
 			remove_2(n, p, s);
 		}
-		if (s->color == 1) {
+//		Case: 3
+		if (p != NULL && s != NULL && s->color == 1) {
 			remove_3(n, p, s);
 		}
+//		Case: 4
 	}
+}
 //	Case 1:
-void remove_1(Node* n, Node* p, Node* s) {
 //	If node is root and has one none leaf child
-//		Replace node with child that isn't null
+void Tree::remove_1(Node* n, Node* p, Node* s) {
+//	Replace node with child that isn't null
 	if (n == root && n->left != NULL && n->right == NULL) {
 		root = n->left;
 		n->left->parent = NULL;
-		delete[] n;
+		delete    n;
 	}
 	else if (n == root && n->right != NULL && n->left == NULL) {
 		root = n->right;
 		n->right->parent = NULL;
-		delete[] n;
+		delete n;
 	}
+}
 //	Case 2:
-void remove_2(Node* n, Node* p, Node* s) {
-//		Rotate sibling through parent
-//		Switch parent and siblings colors
-//	Case 3:
-void remove_3(Node* n, Node* p, Node* s) {
-//	If sibling is black
-//		Color sibling red
-		s->color == 2;
-//		Call Case 1 on parent
-		
+//	If sibling is red
+void Tree::remove_2(Node* n, Node* p, Node* s) {
+//	Rotate sibling through parent
+	if (p->left == n) {
+		if (p->parent != NULL) {
+			s->parent = p->parent;
+		}
+		else {
+			s->parent == NULL;
+		}
+		p->parent = s;
+		p->right = s->left;
+		s->left = p;
 	}
+	else if (p->right == n) {
+		if (p->parent != NULL) {
+			s->parent = p->parent;
+		}
+		else {
+			s->parent == NULL;
+		}
+		p->parent = s;
+		p->left = s->right;
+		s->right = p;
+	}
+//	Switch parent and siblings colors
+	int color = 0;
+	color = p->color;
+	p->color = s->color;
+	s->color = color;
+}
+//	Case 3:
+//	If sibling is black
+void Tree::remove_3(Node* n, Node* p, Node* s) {
+//	Color sibling red
+	s->color == 2;
+//	Call Case 1 on parent
+	if (p->parent != NULL) {
+		p = p->parent;
+	}
+	else {
+		p = NULL;
+	}
+	n = p;
+	if (p != NULL && p->left != NULL && p->right != NULL) {
+		if (p->left == n) {
+			s = p->right;
+		}
+		else {
+			s = p->left;
+		}
+	}
+	else {
+		s = NULL;
+	}
+	remove_1(n, p, s);
+	
 }
 //	Case 4:
 //	If parent is red and sibling's children are black
@@ -331,7 +387,6 @@ void remove_3(Node* n, Node* p, Node* s) {
 //		Switch Parent and Sibling color
 //		Make siblings child black
 
-}
 //--------------------------------------------
 // Do standard BST delete nut before delete
 // Call remove again on the successor
