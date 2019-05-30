@@ -34,6 +34,7 @@ public:
 	void remove(int);
 	void push(int);
 	void reColor(Node*);
+	void remove_cases(Node*, Node*, Node*);
 
 private:
 	// Private Members

@@ -23,6 +23,8 @@ int main() {
 	Tree* tree = new Tree();
 	bool stop = false;
 	
+	std::cout << "This is into deletion the delete is not implemented yet do not use 'delete'" << std::endl;
+	
 	while (stop == false) {
 		//std::cout << "Would you like to input a file or through the console?" << std::endl;
 		char* in = new char[20];
@@ -173,7 +175,8 @@ bool getInput(Tree* tree, char* fileName) { // Input function with file
 			char current = in[index++];
 			if (current == '\0') {
 				break;
-			} else if (current == ',') {
+			} 
+			else if (current == ',') {
 				tree->push(input);
 				//std::cout << "Input: " << input << std::endl;
 				input = 0;
@@ -212,6 +215,7 @@ void getInput(Tree* tree) { // Inptu function for one number
 					tree->push(add);
 				}
 			}
+			break;
 		}
 		//std::cin.unget();
 		//std::cout << "Whitespace: " << int(std::cin.get()) << std::endl;
