@@ -23,7 +23,7 @@ int main() {
 	Tree* tree = new Tree();
 	bool stop = false;
 	
-	std::cout << "This is into deletion the delete is not implemented yet do not use 'delete'" << std::endl;
+	//std::cout << "This is into deletion the delete is not implemented yet do not use 'delete'" << std::endl;
 	
 	while (stop == false) {
 		//std::cout << "Would you like to input a file or through the console?" << std::endl;
@@ -83,6 +83,12 @@ int main() {
 				stop = true;
 				// Need to delete tree
 				break;
+			}
+			else if (strcmp(in, "remove")  == 0) {
+				int data;
+				std::cout << "What value would you like to remove (3 digits max)" << std::endl;
+				std::cin >> data;
+				tree->remove(data);
 			}
 			else if (strcmp(in, "search") == 0) { // Runs search
 				std::cout << "What number are you searching for?" << std::endl;
@@ -156,6 +162,7 @@ void help() { // Help function that list all commands
 	<< "\t" << "'print' = Visually print the tree." << std::endl 
 	<< "\t" << "'quit' = Stops the program." << std::endl << std::endl
 	<< "\t" << "'search' = Search for a number in the tree." << std::endl << std::endl
+	<< "\t" << "'remove' = Removes specified number form the tree." << std::endl << std::endl
 	<< "********************************************" << std::endl;
 }
 

@@ -26,10 +26,10 @@ Node* Tree::search(Node* node, int comp) { // Recurses through the tree looking 
 	}
 	if (node->data != comp) {
 		if (node->data < comp) {
-			return search(node->right, comp);
+			search(node->right, comp);
 		}
 		if (node->data > comp) {
-			return search(node->left, comp);
+			search(node->left, comp);
 		}
 	}
 	else if (node->data == comp) {
@@ -286,18 +286,32 @@ void Tree::remove_cases(Node* n, Node* p, Node* s) {
 	}
 	else {
 //		Case: 1
+// 		If node is root and has one child
 		if (n == root && n->left != NULL && n->right == NULL) {
 			remove_1(n, p, s);
 		}
 //		Case: 2
+//		If sibling is red
 		if (p != NULL && s != NULL && s->color == 2) {
 			remove_2(n, p, s);
 		}
 //		Case: 3
+//		If sibling is black
 		if (p != NULL && s != NULL && s->color == 1) {
 			remove_3(n, p, s);
 		}
-//		Case: 4
+//		Case 4:
+//		If parent is red and sibling's children are black
+		if (p != NULL && p->color == 2 && s != NULL 
+		&& (s->right != NULL && s->right->color == 1 || s->right == NULL 
+		&& s->left != NULL && s->left->color == 1 || s->right == NULL)) {
+			remove_4(n, p, s);
+		}
+//		Case 5:
+//		If the siblings left is black and right is red and node is right and vice versa
+		if (true) {
+			
+		}
 	}
 }
 //	Case 1:
@@ -371,12 +385,34 @@ void Tree::remove_3(Node* n, Node* p, Node* s) {
 	else {
 		s = NULL;
 	}
+	
+	n = p;
+	if (p->parent = NULL) {
+		p = NULL;
+	}
+	else {
+		p = p->parent;
+	}
+	if (p != NULL && p->left != NULL && p->right != NULL && p->left == n) {
+		s = p->right;
+	}
+	else if (p != NULL && p->left != NULL && p->right != NULL && p->right == n){
+		s = p->left;
+	}
+	else {
+		s = NULL;
+	}
+
 	remove_1(n, p, s);
 	
 }
 //	Case 4:
 //	If parent is red and sibling's children are black
+void Tree::remove_4 (Node* n, Node* p, Node* s) {
 //		Color parent black and sibling red
+	p->color = 1;
+	s->color = 2;
+}
 //	Case 5:
 //	If the siblings left is black and right is red and node is right and vice versa
 //		Rotate through sibling
